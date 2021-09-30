@@ -2,7 +2,7 @@ function getRandomFromRange(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-console.log(getRandomFromRange(0, 10));
+getRandomIntFromRange(0, 10)
 
 function getRandomIntFromRange(min, max) {
   min = Math.ceil(min);
@@ -10,4 +10,4 @@ function getRandomIntFromRange(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-console.log(getRandomIntFromRange(0, 10));
+getRandomIntFromRange(0, 10)

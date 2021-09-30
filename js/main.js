@@ -1,8 +1,8 @@
-function getRandomFromRange(min, max) {
-  return Math.random() * (max - min) + min;
+function getRandomFromRange(min, max, number) {
+  return (Math.random() * (max - min) + min).toFixed(number);
 }
 
-getRandomIntFromRange(0, 10)
+getRandomFromRange(0, 10, 5);
 
 function getRandomIntFromRange(min, max) {
   min = Math.ceil(min);
@@ -10,4 +10,4 @@ function getRandomIntFromRange(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-getRandomIntFromRange(0, 10)
+getRandomIntFromRange(0, 10);

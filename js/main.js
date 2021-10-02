@@ -1,19 +1,23 @@
-function getRandomFloatFromRange(min, max, numberAfterComma) {
-  if (max <= min) {
-    min = 0;
+function getRandomNumberInRange (from, to) {
+  if (to <= from) {
+    throw new Error('ошибка, максимальное значение не может быть меньше минимального');
   }
-  return Math.random() * (max - min) + min.toFixed(numberAfterComma);
+  if (from || to < 0) {
+    throw new Error('ошибка, значения не могут быть отрицательными числами');
+  }
+  return Math.random() * (to - from) + from;
+}
+
+
+function getRandomFloatFromRange(min, max, numberAfterComma) {
+  return getRandomNumberInRange(min, max).toFixed(numberAfterComma);
 }
 
 getRandomFloatFromRange(0, 10, 5);
 
+
 function getRandomIntFromRange(min, max) {
-  if (max <= min) {
-    min = 0;
-  }
-  return Math.floor(Math.random() * (max - min) + min);
+  return Math.floor(getRandomNumberInRange(min, max));
 }
 
 getRandomIntFromRange(0, 10);
-
-

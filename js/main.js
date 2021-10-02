@@ -2,7 +2,7 @@ function getRandomNumberInRange (from, to) {
   if (to <= from) {
     throw new Error('ошибка, максимальное значение не может быть меньше минимального');
   }
-  if (from || to < 0) {
+  if (from < 0 || to < 0) {
     throw new Error('ошибка, значения не могут быть отрицательными числами');
   }
   return Math.random() * (to - from) + from;

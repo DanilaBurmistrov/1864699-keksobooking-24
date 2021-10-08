@@ -1,3 +1,20 @@
+const RANDOM_TYPES = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+const RANDOM_CHECKINS = ['12:00', '13:00', '14:00'];
+const RANDOM_CHECKOUTS = ['12:00', '13:00', '14:00'];
+const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+const PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
+const AVATARS = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'];
+const MAX_USER_ADS = 10;
+const MIN_PRICE = 1000;
+const MAX_PRICE = 10000;
+const MIN_ROOMS = 1;
+const MAX_ROOMS = 5;
+const MIN_GUESTS = 1;
+const MAX_GUESTS = 5;
+
+
 function getRandomNumberInRange (from, to) {
   if (to <= from) {
     throw new Error('ошибка, максимальное значение не может быть меньше минимального');
@@ -13,46 +30,25 @@ function getRandomFloatFromRange(min, max, numberAfterComma) {
   return getRandomNumberInRange(min, max).toFixed(numberAfterComma);
 }
 
-getRandomFloatFromRange();
-
 
 function getRandomIntFromRange(min, max) {
   return Math.floor(getRandomNumberInRange(min, max));
 }
 
-getRandomIntFromRange();
 
-function getRandomType () {
-  const randomTypes = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
-  const randomType = randomTypes[Math.floor(Math.random()*randomTypes.length)];
-  return randomType;
+function getRandomElementOfArray (randomArray) {
+  const calculatedArray = randomArray[Math.floor(Math.random()*randomArray.length)];
+  return calculatedArray;
 }
-getRandomType();
 
-function getRandomCheckin () {
-  const randomCheckins = ['12:00', '13:00', '14:00'];
-  const randomCheckin = randomCheckins[Math.floor(Math.random()*randomCheckins.length)];
-  return randomCheckin;
-}
-getRandomCheckin();
-
-function getRandomCheckout () {
-  const randomCheckouts = ['12:00', '13:00', '14:00'];
-  const randomCheckout = randomCheckouts[Math.floor(Math.random()*randomCheckouts.length)];
-  return randomCheckout;
-}
-getRandomCheckout();
-
-const features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-
-function getRandomFeatures() {
-  const maxLength = features.length;
+function getRandomIndicators(transmittedArray) {
+  const maxLength = transmittedArray.length;
   const lengthOfArray = getRandomIntFromRange(1, maxLength);
   const array = [];
 
   while (array.length < lengthOfArray) {
     const indexOfElement = getRandomIntFromRange(0, maxLength - 1);
-    const element = features[indexOfElement];
+    const element = transmittedArray[indexOfElement];
 
     if (!array.includes(element)) {
       array.push(element);
@@ -61,76 +57,55 @@ function getRandomFeatures() {
   return array;
 }
 
-getRandomFeatures();
+const takenAvatars = [];
 
-const photos = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
-
-function getARandomPhotos() {
-  const maxLength = photos.length;
-  const lengthOfArray = getRandomIntFromRange(1, maxLength);
-  const array = [];
-
-  while (array.length < lengthOfArray) {
-    const indexOfElement = getRandomIntFromRange(0, maxLength - 1);
-    const element = photos[indexOfElement];
-
-    if (!array.includes(element)) {
-      array.push(element);
+function createUserData() {
+  const AVATAR_BASE_URL = 'img/avatars/';
+  const AVATAR_FORMAT = 'png';
+  function getRandomAvatar() {
+    let found = false;
+    while (!found) {
+      const key = getRandomIntFromRange(0, AVATARS.length - 1);
+      if (!takenAvatars.includes(AVATARS[key])) {
+        takenAvatars.push(AVATARS[key]);
+        found = true;
+        return AVATARS[key];
+      }
     }
   }
-  return array;
+  const avatarUrl = `${AVATAR_BASE_URL}user${getRandomAvatar()}.${AVATAR_FORMAT}`;
+  return avatarUrl;
 }
 
-getARandomPhotos();
-
-const avatar = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'];
-
-const taken = [];
-
-function getRandomAvatar() {
-  let found = false;
-  while (!found) {
-    const key = getRandomIntFromRange(0, avatar.length - 1);
-    if (!taken.includes(avatar[key])) {
-      taken.push(avatar[key]);
-      found = true;
-      return avatar[key];
-    }
+function generateDataArray () {
+  const resthouses  = [];
+  // eslint-disable-next-line id-length
+  for (let i = 0; i < MAX_USER_ADS; i++) {
+    const lat = getRandomFloatFromRange(35.65000, 35.70000, 5);
+    const lng = getRandomFloatFromRange(139.70000, 139.80000, 5);
+    const newObject = {
+      offer: {
+        title: 'Место для отдыха',
+        address: `${lat, lng}`,
+        price: getRandomIntFromRange(MIN_PRICE, MAX_PRICE),
+        type: getRandomElementOfArray(RANDOM_TYPES),
+        rooms: getRandomIntFromRange(MIN_ROOMS, MAX_ROOMS),
+        guests: getRandomIntFromRange(MIN_GUESTS, MAX_GUESTS),
+        checkin: getRandomElementOfArray(RANDOM_CHECKINS),
+        checkout: getRandomElementOfArray(RANDOM_CHECKOUTS),
+        features: getRandomIndicators(FEATURES),
+        description: 'Лучшее предложение',
+        photos: getRandomIndicators(PHOTOS),
+      },
+      author: {
+        avatar: createUserData(),
+      },
+      location: {
+        lat,
+        lng,
+      },
+    };
+    resthouses.push(newObject);
   }
 }
-
-getRandomAvatar();
-
-const resthouse = [];
-
-
-for (let i = 0; i < 10; i++) {
-  const newObject = {
-    offer: {
-      title: 'Место для отдыха',
-      address: `${getRandomFloatFromRange(35.65000, 35.70000, 5), getRandomFloatFromRange(139.70000, 139.80000, 5)}`,
-      price: getRandomIntFromRange(1000, 10000),
-      type: getRandomType(),
-      rooms: getRandomIntFromRange(1, 5),
-      guests: getRandomIntFromRange(1, 5),
-      checkin: getRandomCheckin(),
-      checkout: getRandomCheckout(),
-      features: getRandomFeatures(),
-      description: 'Лучшее предложение',
-      photos: getARandomPhotos(),
-    },
-    author: {
-      avatar: `img/avatars/user${getRandomAvatar()}.png`,
-    },
-    location: {
-      lat: getRandomFloatFromRange(35.65000, 35.70000, 5),
-      lng: getRandomFloatFromRange(139.70000, 139.80000, 5),
-    },
-  };
-  resthouse.push(newObject);
-}
-console.log(resthouse);
-
-
+generateDataArray ();

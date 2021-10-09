@@ -13,6 +13,8 @@ const MIN_ROOMS = 1;
 const MAX_ROOMS = 5;
 const MIN_GUESTS = 1;
 const MAX_GUESTS = 5;
+const AVATAR_BASE_URL = 'img/avatars/';
+const AVATAR_FORMAT = 'png';
 
 
 function getRandomNumberInRange (from, to) {
@@ -36,12 +38,12 @@ function getRandomIntFromRange(min, max) {
 }
 
 
-function getRandomElementOfArray (randomArray) {
-  const calculatedArray = randomArray[Math.floor(Math.random()*randomArray.length)];
-  return calculatedArray;
+function getRandomElementOfArray (randomElement) {
+  const calculatedElement = randomElement[getRandomNumberInRange (0, randomElement.length - 1)];
+  return calculatedElement;
 }
 
-function getRandomIndicators(transmittedArray) {
+function getRandomArrayFromArray(transmittedArray) {
   const maxLength = transmittedArray.length;
   const lengthOfArray = getRandomIntFromRange(1, maxLength);
   const array = [];
@@ -59,9 +61,7 @@ function getRandomIndicators(transmittedArray) {
 
 const takenAvatars = [];
 
-function createUserData() {
-  const AVATAR_BASE_URL = 'img/avatars/';
-  const AVATAR_FORMAT = 'png';
+function getAvatarUrl() {
   function getRandomAvatar() {
     let found = false;
     while (!found) {
@@ -79,8 +79,7 @@ function createUserData() {
 
 function generateDataArray () {
   const resthouses  = [];
-  // eslint-disable-next-line id-length
-  for (let i = 0; i < MAX_USER_ADS; i++) {
+  function generateNewObject () {
     const lat = getRandomFloatFromRange(35.65000, 35.70000, 5);
     const lng = getRandomFloatFromRange(139.70000, 139.80000, 5);
     const newObject = {
@@ -93,19 +92,23 @@ function generateDataArray () {
         guests: getRandomIntFromRange(MIN_GUESTS, MAX_GUESTS),
         checkin: getRandomElementOfArray(RANDOM_CHECKINS),
         checkout: getRandomElementOfArray(RANDOM_CHECKOUTS),
-        features: getRandomIndicators(FEATURES),
+        features: getRandomArrayFromArray(FEATURES),
         description: 'Лучшее предложение',
-        photos: getRandomIndicators(PHOTOS),
+        photos: getRandomArrayFromArray(PHOTOS),
       },
       author: {
-        avatar: createUserData(),
+        avatar: getAvatarUrl(),
       },
       location: {
         lat,
         lng,
       },
     };
-    resthouses.push(newObject);
+    return newObject;
   }
+  for (let int = 0; int < MAX_USER_ADS; int++) {
+    resthouses.push(generateNewObject ());
+  }
+  return resthouses;
 }
 generateDataArray ();

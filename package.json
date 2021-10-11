@@ -3,6 +3,7 @@
   "version": "24.0.0",
   "private": true,
   "description": "Личный проект «Кексобукинг» от HTML Academy",
+  "type":"module",
   "repository": {
     "type": "git",
     "url": "git@github.com:htmlacademy-javascript/1864699-keksobooking-24.git"
@@ -13,7 +14,7 @@
   "devDependencies": {
     "browser-sync": "2.26.14",
     "eslint": "7.18.0",
-    "eslint-config-htmlacademy": "4.0.0"
+    "eslint-config-htmlacademy": "4.1.0"
   },
   "license": "MIT",
   "dependencies": {},

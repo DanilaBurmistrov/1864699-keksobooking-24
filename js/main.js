@@ -19,7 +19,7 @@ import {getRandomIntFromRange,
   getRandomFloatFromRange,
   getRandomElementOfArray} from './functions-random-number.js';
 
-function generateDataArray () {
+export function generateDataArray () {
   const resthouses  = [];
   function generateNewObject () {
     const lat = getRandomFloatFromRange(35.65000, 35.70000, 5);
@@ -54,3 +54,4 @@ function generateDataArray () {
   return resthouses;
 }
 generateDataArray ();
+

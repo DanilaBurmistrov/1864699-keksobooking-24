@@ -1,7 +1,7 @@
 const formsAttributes = document.querySelector('.ad-form');
 const mapsAttributes = document.querySelector('.map__filters');
 const Fs =  document.querySelectorAll('fieldset');
-const Sd = document.querySelectorAll('selected');
+const Sd = document.querySelectorAll('select');
 
 const generateStatusOfOptions = function () {
   formsAttributes.classList.add('ad-form--disabled');

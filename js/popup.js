@@ -17,38 +17,42 @@ const descriptionOfTypes = {
   palace : 'Двроец',
   hotel : 'Отель',
 };
+let oneCard;
 
 const listCardFragment = document.createDocumentFragment();
-
 const getUserData = function() {
   array.forEach ((element) => {
     const cardElement = cardTemplate.content.cloneNode(true);
-    CheckCardElement (cardElement.querySelector('.popup__title'), 'textContent', element.title);
-    CheckCardElement (cardElement.querySelector('.popup__text--address'), 'textContent', element.address);
-    CheckCardElement (cardElement.querySelector('.popup__text--price'), 'textContent', `${element.price} ₽/ночь`);
-    CheckCardElement (cardElement.querySelector('.popup__type'), 'textContent', descriptionOfTypes[element.type]);
-    CheckCardElement (cardElement.querySelector('.popup__text--capacity'), 'textContent', `${element.rooms} комнаты для ${element.guests} гостей`);
-    CheckCardElement (cardElement.querySelector('.popup__text--time'), 'textContent', `Заезд после ${element.checkin}, выезд до ${element.checkout}`);
-    CheckCardElement (cardElement.querySelector('.popup__description'), 'textContent', element.description);
-    CheckCardElement (cardElement.querySelector('.popup__avatar'), 'src', element.avatar);
+    CheckCardElement (cardElement.querySelector('.popup__title'), 'textContent', element.offer.title);
+    CheckCardElement (cardElement.querySelector('.popup__text--address'), 'textContent', element.offer.address);
+    CheckCardElement (cardElement.querySelector('.popup__text--price'), 'textContent', `${element.offer.price} ₽/ночь`);
+    CheckCardElement (cardElement.querySelector('.popup__type'), 'textContent', descriptionOfTypes[element.offer.type]);
+    CheckCardElement (cardElement.querySelector('.popup__text--capacity'), 'textContent', `${element.offer.rooms} комнаты для ${element.offer.guests} гостей`);
+    CheckCardElement (cardElement.querySelector('.popup__text--time'), 'textContent', `Заезд после ${element.offer.checkin}, выезд до ${element.offer.checkout}`);
+    CheckCardElement (cardElement.querySelector('.popup__description'), 'textContent', element.offer.description);
+    CheckCardElement (cardElement.querySelector('.popup__avatar'), 'src', element.author.avatar);
 
     const featuresList = cardElement.querySelector('.popup__features');
-    featuresList.children.forEach ((featureElement) => {
-      const isFeatureActive = element.features.some ((feature) => featureElement.classList.contains(`popup__feature--${feature}`));
+    for (const featureElement of featuresList.children) {
+      const isFeatureActive = element.offer.features.some ((feature) => featureElement.classList.contains(`popup__feature--${feature}`));
       if (!isFeatureActive) {
         featureElement.style.display = 'none';
       }
-    });
+    }
 
-    element.photos.forEach ((photo) => {
-      const sel = document.querySelector('.popup__photo');
-      const selClone = sel.content.cloneNode(true);
+    element.offer.photos.forEach ((photo) => {
+      const sel = cardElement.querySelector('.popup__photo');
+      const selClone = sel.cloneNode(true);
       selClone.src = photo;
+      cardElement.querySelector('.popup__photos').appendChild(selClone);
     });
-
+    if (!oneCard) {
+      oneCard = cardElement;
+    }
     listCardFragment.appendChild(cardElement);
   });
-  cardTemplate.appendChild(listCardFragment);
+  document.body.appendChild(listCardFragment);
+  document.querySelector('.map__canvas').appendChild(listCardFragment);
 };
 
 export {getUserData};

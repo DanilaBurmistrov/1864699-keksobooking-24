@@ -71,7 +71,7 @@
     <!-- Форма объявления -->
     <section class="notice">
       <h2 class="notice__title">Ваше объявление</h2>
-      <form class="ad-form" method="post" enctype="multipart/form-data" autocomplete="off">
+      <form class="ad-form" method="post" action = 'https://24.javascript.pages.academy/keksobooking' enctype="multipart/form-data" autocomplete="off">
         <fieldset class="ad-form-header">
           <legend class="ad-form-header__title">Ваша фотография (для карты)</legend>
           <div class="ad-form-header__upload">
@@ -86,11 +86,11 @@
           </div>
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide">
-          <label class="ad-form__label" for="title">Заголовок объявления</label>
+          <label class="ad-form__label" for="title" required minlength="30" maxlength="100">Заголовок объявления</label>
           <input id="title" name="title" type="text" placeholder="Милая, уютная квартирка в центре Токио">
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide">
-          <label class="ad-form__label" for="address">Адрес (координаты)</label>
+          <label class="ad-form__label" for="address" required>Адрес (координаты)</label>
           <input id="address" name="address" type="text">
         </fieldset>
         <fieldset class="ad-form__element">
@@ -104,11 +104,11 @@
           </select>
         </fieldset>
         <fieldset class="ad-form__element">
-          <label class="ad-form__label" for="price">Цена за ночь, руб.</label>
-          <input id="price" name="price" type="number" placeholder="5000">
+          <label class="ad-form__label" for="price" required>Цена за ночь, руб.</label>
+          <input id="price" name="price" type="number" placeholder="5000" max='1000000'>
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--time">
-          <label class="ad-form__label" for="timein">Время заезда и выезда</label>
+          <label class="ad-form__label" for="timein" required>Время заезда и выезда</label>
           <select id="timein" name="timein">
             <option value="12:00" selected>После 12</option>
             <option value="13:00">После 13</option>
@@ -121,7 +121,7 @@
           </select>
         </fieldset>
         <fieldset class="ad-form__element">
-          <label class="ad-form__label" for="room_number">Количество комнат</label>
+          <label class="ad-form__label" for="room_number" required>Количество комнат</label>
           <select id="room_number" name="rooms">
             <option value="1" selected>1 комната</option>
             <option value="2">2 комнаты</option>
@@ -130,7 +130,7 @@
           </select>
         </fieldset>
         <fieldset class="ad-form__element">
-          <label class="ad-form__label" for="capacity">Количество мест</label>
+          <label class="ad-form__label" for="capacity" required>Количество мест</label>
           <select id="capacity" name="capacity">
             <option value="3" selected>для 3 гостей</option>
             <option value="2">для 2 гостей</option>
@@ -158,7 +158,7 @@
           <textarea id="description" name="description" placeholder="Здесь расскажите о том, какое ваше жилье замечательное и вообще"></textarea>
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide">
-          <label class="ad-form__label">Фотография жилья</label>
+          <label class="ad-form__label" required>Фотография жилья</label>
           <div class="ad-form__photo-container">
             <div class="ad-form__upload">
               <input type="file" id="images" name="images" class="ad-form__input visually-hidden">
@@ -214,7 +214,6 @@
       </div>
     </article>
   </template>
-
   <!-- Сообщение об успешном создании объявления -->
   <template id="success">
     <div class="success">

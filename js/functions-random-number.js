@@ -19,7 +19,7 @@ function getRandomIntFromRange(min, max) {
 
 
 function getRandomElementOfArray (randomElement) {
-  const calculatedElement = randomElement[getRandomNumberInRange (0, randomElement.length - 1)];
+  const calculatedElement = randomElement[Math.floor(Math.random() * randomElement.length)];
   return calculatedElement;
 }
 

@@ -8,20 +8,20 @@ const toggleFormState = (isDisabled) => {
     formsAttributes.classList.add('ad-form--disabled');
     mapsAttributes.classList.add('map__filters--disabled');
     fieldsetElements.forEach ((fieldsetElement) => {
-      fieldsetElement.setAttribute('disabled', 'disabled');
+      fieldsetElement.setAttribute('disabled', true);
     });
     selectElements.forEach ((selectElement) => {
-      selectElement.setAttribute('disabled', 'disabled');
+      selectElement.setAttribute('disabled', true);
     });
   } else {
     formsAttributes.classList.remove('ad-form--disabled');
     mapsAttributes.classList.remove('map__filters--disabled');
     fieldsetElements.forEach ((fieldsetElement) => {
-      fieldsetElement.removeAttribute('disabled', 'disabled');
+      fieldsetElement.removeAttribute('disabled', false);
     });
     selectElements.forEach ((selectElement) => {
-      selectElement.removeAttribute('disabled', 'disabled');
+      selectElement.removeAttribute('disabled', false);
     });
   }
 };
-toggleFormState ();
+toggleFormState (false);

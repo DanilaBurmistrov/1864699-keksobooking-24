@@ -24,4 +24,5 @@ const toggleFormState = (isDisabled) => {
     });
   }
 };
-toggleFormState (false);
+
+export {toggleFormState};

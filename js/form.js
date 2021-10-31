@@ -81,3 +81,40 @@ export const generateValidityError = function (evt) {
   }
 };
 
+const housingTypeAdForm = adForm.querySelector('#type');
+const priceAdForm = adForm.querySelector('#price');
+const minHousingPrice = {
+  bungalow: 0,
+  flat: 1000,
+  house: 5000,
+  hotel: 3000,
+  palace: 10000,
+};
+
+const validatePriceRoom = () => {
+  const minPrice = minHousingPrice[housingTypeAdForm.value];
+  priceAdForm.placeholder = minPrice;
+  if (priceAdForm.value < minPrice) {
+    priceAdForm.setCustomValidity(`Минимальная цена данного типа жилья ${minPrice} рублей`);
+  } else {
+    priceAdForm.setCustomValidity('');
+  }
+};
+
+priceAdForm.addEventListener('input', validatePriceRoom);
+housingTypeAdForm.addEventListener('change', validatePriceRoom);
+
+const timeinAdForm = adForm.querySelector('#timein');
+const timeoutAdForm = adForm.querySelector('#timeout');
+const timeIn = 'timein';
+const timeOut = 'timeout';
+
+const validateTime = (evt) => {
+  if (evt.target.name === timeOut || evt.target.name === timeIn) {
+    timeinAdForm.value = evt.target.value;
+    timeoutAdForm.value = evt.target.value;
+  }
+};
+
+timeinAdForm.addEventListener('change', validateTime);
+timeoutAdForm.addEventListener('change', validateTime);

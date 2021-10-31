@@ -15,6 +15,9 @@ const MIN_GUESTS = 1;
 const MAX_GUESTS = 5;
 const AVATAR_BASE_URL = 'img/avatars/';
 const AVATAR_FORMAT = 'png';
+const MAX_APARTMENTS = 100;
+const MIN_VISITORS = 0;
+
 
 export {RANDOM_TYPES,
   RANDOM_CHECKINS,
@@ -30,4 +33,7 @@ export {RANDOM_TYPES,
   MIN_GUESTS,
   MAX_GUESTS,
   AVATAR_BASE_URL,
-  AVATAR_FORMAT};
+  AVATAR_FORMAT,
+  MAX_APARTMENTS,
+  MIN_VISITORS
+};

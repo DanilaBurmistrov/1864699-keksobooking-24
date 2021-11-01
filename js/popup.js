@@ -39,11 +39,13 @@ const getUserData = function() {
       }
     }
 
+    const popupPhotosEl = cardElement.querySelector('.popup__photos');
+    const img = popupPhotosEl.querySelector('img');
+    popupPhotosEl.innerHTML = '';
     element.offer.photos.forEach ((photo) => {
-      const sel = cardElement.querySelector('.popup__photo');
-      const selClone = sel.cloneNode(true);
+      const selClone = img.cloneNode(true);
       selClone.src = photo;
-      cardElement.querySelector('.popup__photos').appendChild(selClone);
+      popupPhotosEl.appendChild(selClone);
     });
     listCardFragment.appendChild(cardElement);
   });

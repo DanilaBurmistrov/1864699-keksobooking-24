@@ -1,6 +1,9 @@
 import {MAX_APARTMENTS,
   MIN_VISITORS} from './constants.js';
 
+const TIME_IN = 'timein';
+const TIME_OUT = 'timeout';
+
 const formsAttributes = document.querySelector('.ad-form');
 const mapsAttributes = document.querySelector('.map__filters');
 const fieldsetElements = document.querySelectorAll('fieldset');
@@ -36,7 +39,7 @@ const inputTitle = adForm.querySelector('#title');
 const minTitleLength = inputTitle.minLength;
 const maxTitleLength = inputTitle.maxLength;
 
-export const getAllowedValueOfTitle = () => {
+export const validateTitle = () => {
   const valueLength = inputTitle.value.length;
 
   if (valueLength < minTitleLength) {
@@ -49,12 +52,12 @@ export const getAllowedValueOfTitle = () => {
   inputTitle.reportValidity();
 };
 
-inputTitle.addEventListener('input', getAllowedValueOfTitle);
+inputTitle.addEventListener('input', validateTitle);
 
 const numberOfRoomsAdForm = adForm.querySelector('#room_number');
 const capacityOfRoomsAdForm = adForm.querySelector('#capacity');
 
-export const getValidateCapacityAndRooms = () => {
+export const validateCapacityAndRooms = () => {
   const rooms = Number(numberOfRoomsAdForm.value);
   const guests = Number(capacityOfRoomsAdForm.value);
   if (rooms === MAX_APARTMENTS && guests !== MIN_VISITORS) {
@@ -66,11 +69,10 @@ export const getValidateCapacityAndRooms = () => {
   } else {
     numberOfRoomsAdForm.setCustomValidity('');
   }
-  numberOfRoomsAdForm.reportValidity();
 };
 
-numberOfRoomsAdForm.addEventListener('change', getValidateCapacityAndRooms);
-capacityOfRoomsAdForm.addEventListener('change', getValidateCapacityAndRooms);
+numberOfRoomsAdForm.addEventListener('change', validateCapacityAndRooms);
+capacityOfRoomsAdForm.addEventListener('change', validateCapacityAndRooms);
 
 export const generateValidityError = function (evt) {
   const field = evt.target;
@@ -81,3 +83,56 @@ export const generateValidityError = function (evt) {
   }
 };
 
+const housingTypeAdForm = adForm.querySelector('#type');
+const priceAdForm = adForm.querySelector('#price');
+const minHousingPrice = {
+  bungalow: 0,
+  flat: 1000,
+  house: 5000,
+  hotel: 3000,
+  palace: 10000,
+};
+
+const validatePriceRoom = () => {
+  const minPrice = minHousingPrice[housingTypeAdForm.value];
+  priceAdForm.placeholder = minPrice;
+  if (priceAdForm.value < minPrice) {
+    priceAdForm.setCustomValidity(`Минимальная цена данного типа жилья ${minPrice} рублей`);
+  } else {
+    priceAdForm.setCustomValidity('');
+  }
+};
+
+priceAdForm.addEventListener('input', validatePriceRoom);
+housingTypeAdForm.addEventListener('change', validatePriceRoom);
+
+const timeinAdForm = adForm.querySelector('#timein');
+const timeoutAdForm = adForm.querySelector('#timeout');
+
+const validateTime = (evt) => {
+  if (evt.target.name === TIME_OUT || evt.target.name === TIME_IN) {
+    timeinAdForm.value = evt.target.value;
+    timeoutAdForm.value = evt.target.value;
+  }
+};
+
+timeinAdForm.addEventListener('change', validateTime);
+timeoutAdForm.addEventListener('change', validateTime);
+
+
+const adressInput = adForm.querySelector('#address');
+
+const setAddress = () => {
+  adressInput.value = '135.00000, 86.66666';
+};
+
+setAddress();
+
+// const getAllValidate = () => {
+//   validateTitle();
+//   validateCapacityAndRooms();
+//   validatePriceRoom();
+//   validateTime();
+// };
+
+// adForm.addEventListener('submit', getAllValidate);

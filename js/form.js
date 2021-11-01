@@ -128,12 +128,11 @@ const setAddress = () => {
 
 setAddress();
 
-const getAllValidate = (evt) => {
-  validateTitle();
-  validateCapacityAndRooms();
-  validatePriceRoom();
-  validateTime(evt);
-};
+// const getAllValidate = () => {
+//   validateTitle();
+//   validateCapacityAndRooms();
+//   validatePriceRoom();
+//   validateTime();
+// };
 
-adForm.addEventListener('submit', getAllValidate);
-
+// adForm.addEventListener('submit', getAllValidate);

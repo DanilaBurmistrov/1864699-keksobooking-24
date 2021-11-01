@@ -1,6 +1,9 @@
 import {MAX_APARTMENTS,
   MIN_VISITORS} from './constants.js';
 
+const TIME_IN = 'timein';
+const TIME_OUT = 'timeout';
+
 const formsAttributes = document.querySelector('.ad-form');
 const mapsAttributes = document.querySelector('.map__filters');
 const fieldsetElements = document.querySelectorAll('fieldset');
@@ -36,7 +39,7 @@ const inputTitle = adForm.querySelector('#title');
 const minTitleLength = inputTitle.minLength;
 const maxTitleLength = inputTitle.maxLength;
 
-export const getAllowedValueOfTitle = () => {
+export const validateTitle = () => {
   const valueLength = inputTitle.value.length;
 
   if (valueLength < minTitleLength) {
@@ -49,12 +52,12 @@ export const getAllowedValueOfTitle = () => {
   inputTitle.reportValidity();
 };
 
-inputTitle.addEventListener('input', getAllowedValueOfTitle);
+inputTitle.addEventListener('input', validateTitle);
 
 const numberOfRoomsAdForm = adForm.querySelector('#room_number');
 const capacityOfRoomsAdForm = adForm.querySelector('#capacity');
 
-export const getValidateCapacityAndRooms = () => {
+export const validateCapacityAndRooms = () => {
   const rooms = Number(numberOfRoomsAdForm.value);
   const guests = Number(capacityOfRoomsAdForm.value);
   if (rooms === MAX_APARTMENTS && guests !== MIN_VISITORS) {
@@ -66,11 +69,10 @@ export const getValidateCapacityAndRooms = () => {
   } else {
     numberOfRoomsAdForm.setCustomValidity('');
   }
-  numberOfRoomsAdForm.reportValidity();
 };
 
-numberOfRoomsAdForm.addEventListener('change', getValidateCapacityAndRooms);
-capacityOfRoomsAdForm.addEventListener('change', getValidateCapacityAndRooms);
+numberOfRoomsAdForm.addEventListener('change', validateCapacityAndRooms);
+capacityOfRoomsAdForm.addEventListener('change', validateCapacityAndRooms);
 
 export const generateValidityError = function (evt) {
   const field = evt.target;
@@ -106,11 +108,9 @@ housingTypeAdForm.addEventListener('change', validatePriceRoom);
 
 const timeinAdForm = adForm.querySelector('#timein');
 const timeoutAdForm = adForm.querySelector('#timeout');
-const timeIn = 'timein';
-const timeOut = 'timeout';
 
 const validateTime = (evt) => {
-  if (evt.target.name === timeOut || evt.target.name === timeIn) {
+  if (evt.target.name === TIME_OUT || evt.target.name === TIME_IN) {
     timeinAdForm.value = evt.target.value;
     timeoutAdForm.value = evt.target.value;
   }
@@ -118,3 +118,22 @@ const validateTime = (evt) => {
 
 timeinAdForm.addEventListener('change', validateTime);
 timeoutAdForm.addEventListener('change', validateTime);
+
+
+const adressInput = adForm.querySelector('#address');
+
+const setAddress = () => {
+  adressInput.value = '135.00000, 86.66666';
+};
+
+setAddress();
+
+const getAllValidate = (evt) => {
+  validateTitle();
+  validateCapacityAndRooms();
+  validatePriceRoom();
+  validateTime(evt);
+};
+
+adForm.addEventListener('submit', getAllValidate);
+

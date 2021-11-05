@@ -49,7 +49,6 @@ const getUserData = function() {
     });
     listCardFragment.appendChild(cardElement);
   });
-  document.querySelector('.map__canvas').appendChild(listCardFragment);
 };
 
 export {getUserData};

@@ -1,7 +1,7 @@
-import {getUserData} from './popup.js';
 import {getMapPoints, resetAdFormLocation} from './map.js';
+import {generateDataArray} from './data.js';
 
 
-getUserData();
-getMapPoints();
+const dataArray = generateDataArray();
+getMapPoints(dataArray);
 resetAdFormLocation();

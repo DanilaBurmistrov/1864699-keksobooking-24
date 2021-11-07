@@ -1,4 +1,3 @@
-import {generateDataArray} from './data.js';
 
 const checkCardElement = function (element, property, propertyValue) {
   if (propertyValue) {
@@ -8,7 +7,6 @@ const checkCardElement = function (element, property, propertyValue) {
   }
 };
 
-const array =  generateDataArray();
 const cardTemplate = document.querySelector('#card');
 const descriptionOfTypes = {
   flat : 'Квартира',
@@ -18,38 +16,32 @@ const descriptionOfTypes = {
   hotel : 'Отель',
 };
 
-const listCardFragment = document.createDocumentFragment();
-const getUserData = function() {
-  array.forEach ((element) => {
-    const cardElement = cardTemplate.content.cloneNode(true);
-    checkCardElement (cardElement.querySelector('.popup__title'), 'textContent', element.offer.title);
-    checkCardElement (cardElement.querySelector('.popup__text--address'), 'textContent', element.offer.address);
-    checkCardElement (cardElement.querySelector('.popup__text--price'), 'textContent', `${element.offer.price} ₽/ночь`);
-    checkCardElement (cardElement.querySelector('.popup__type'), 'textContent', descriptionOfTypes[element.offer.type]);
-    checkCardElement (cardElement.querySelector('.popup__text--capacity'), 'textContent', `${element.offer.rooms} комнаты для ${element.offer.guests} гостей`);
-    checkCardElement (cardElement.querySelector('.popup__text--time'), 'textContent', `Заезд после ${element.offer.checkin}, выезд до ${element.offer.checkout}`);
-    checkCardElement (cardElement.querySelector('.popup__description'), 'textContent', element.offer.description);
-    checkCardElement (cardElement.querySelector('.popup__avatar'), 'src', element.author.avatar);
+export const renderPopup = function(ad) {
+  const popup = cardTemplate.content.cloneNode(true);
+  checkCardElement (popup.querySelector('.popup__title'), 'textContent', ad.offer.title);
+  checkCardElement (popup.querySelector('.popup__text--address'), 'textContent', ad.offer.address);
+  checkCardElement (popup.querySelector('.popup__text--price'), 'textContent', `${ad.offer.price} ₽/ночь`);
+  checkCardElement (popup.querySelector('.popup__type'), 'textContent', descriptionOfTypes[ad.offer.type]);
+  checkCardElement (popup.querySelector('.popup__text--capacity'), 'textContent', `${ad.offer.rooms} комнаты для ${ad.offer.guests} гостей`);
+  checkCardElement (popup.querySelector('.popup__text--time'), 'textContent', `Заезд после ${ad.offer.checkin}, выезд до ${ad.offer.checkout}`);
+  checkCardElement (popup.querySelector('.popup__description'), 'textContent', ad.offer.description);
+  checkCardElement (popup.querySelector('.popup__avatar'), 'src', ad.author.avatar);
 
-    const featuresList = cardElement.querySelector('.popup__features');
-    for (const featureElement of featuresList.children) {
-      const isFeatureActive = element.offer.features.some ((feature) => featureElement.classList.contains(`popup__feature--${feature}`));
-      if (!isFeatureActive) {
-        featureElement.style.display = 'none';
-      }
+  const featuresList = popup.querySelector('.popup__features');
+  for (const featureElement of featuresList.children) {
+    const isFeatureActive = ad.offer.features.some ((feature) => featureElement.classList.contains(`popup__feature--${feature}`));
+    if (!isFeatureActive) {
+      featureElement.style.display = 'none';
     }
+  }
 
-    const popupPhotosEl = cardElement.querySelector('.popup__photos');
-    const img = popupPhotosEl.querySelector('img');
-    popupPhotosEl.innerHTML = '';
-    element.offer.photos.forEach ((photo) => {
-      const selClone = img.cloneNode(true);
-      selClone.src = photo;
-      popupPhotosEl.appendChild(selClone);
-    });
-    listCardFragment.appendChild(cardElement);
+  const popupPhotosEl = popup.querySelector('.popup__photos');
+  const img = popupPhotosEl.querySelector('img');
+  popupPhotosEl.innerHTML = '';
+  ad.offer.photos.forEach ((photo) => {
+    const selClone = img.cloneNode(true);
+    selClone.src = photo;
+    popupPhotosEl.appendChild(selClone);
   });
-  document.querySelector('.map__canvas').appendChild(listCardFragment);
+  return popup;
 };
-
-export {getUserData};

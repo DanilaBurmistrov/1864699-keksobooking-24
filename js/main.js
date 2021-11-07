@@ -1,5 +1,7 @@
-import {getUserData} from './popup.js';
-import {toggleFormState} from './form.js';
+import {getMapPoints, resetAdFormLocation} from './map.js';
+import {generateDataArray} from './data.js';
 
-toggleFormState(false);
-getUserData();
+
+const dataArray = generateDataArray();
+getMapPoints(dataArray);
+resetAdFormLocation();

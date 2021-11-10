@@ -1,6 +1,7 @@
 import {toggleFormState} from './form.js';
 import {renderPopup} from './popup.js';
 
+
 const MAP_CENTER_LAT = 35.68493;
 const MAP_CENTER_LNG = 139.75213;
 const MAP_SCALE = 10;

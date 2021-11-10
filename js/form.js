@@ -1,5 +1,9 @@
 import {MAX_APARTMENTS,
   MIN_VISITORS} from './constants.js';
+import {sendData} from './fetch.js';
+import {resetAdFormLocation} from './map.js';
+import {getPopupSuccess, getPopupError} from './modal.js';
+
 
 const TIME_IN = 'timein';
 const TIME_OUT = 'timeout';
@@ -128,11 +132,33 @@ const setAddress = () => {
 
 setAddress();
 
-// const getAllValidate = () => {
-//   validateTitle();
-//   validateCapacityAndRooms();
-//   validatePriceRoom();
-//   validateTime();
-// };
+const mapFilters = document.querySelector('.map__filters');
+const adFormReset = adForm.querySelector('.ad-form__reset');
 
-// adForm.addEventListener('submit', getAllValidate);
+const resetMapFilters = () => {
+  mapFilters.reset();
+};
+
+const resetList = (onSuccess) => {
+  adForm.reset();
+  resetAdFormLocation();
+  resetMapFilters();
+  onSuccess ? getPopupSuccess() : !getPopupSuccess();
+};
+
+const adFormResetHandler = (evt) => {
+  evt.preventDefault();
+  resetList();
+};
+
+adFormReset.addEventListener('click', adFormResetHandler);
+
+adForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  sendData(
+    resetList,
+    getPopupError,
+    new FormData(evt.target),
+  );
+});

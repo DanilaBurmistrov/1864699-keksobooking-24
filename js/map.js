@@ -1,5 +1,5 @@
 import {toggleFormState} from './form.js';
-import {getData} from './fetch.js';
+import {renderPopup} from './popup.js';
 
 
 const MAP_CENTER_LAT = 35.68493;
@@ -92,7 +92,7 @@ const getMapPoints = (array) => {
 
     marker
       .addTo(markerGroup)
-      .bindPopup(getData({author, offer, location}),
+      .bindPopup(renderPopup({author, offer, location}),
         {
           keepInView: true,
           minWidth: BALOON_MIN_WIDTH,

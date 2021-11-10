@@ -29,19 +29,22 @@ export const renderPopup = function(ad) {
 
   const featuresList = popup.querySelector('.popup__features');
   for (const featureElement of featuresList.children) {
-    const isFeatureActive = ad.offer.features.some ((feature) => featureElement.classList.contains(`popup__feature--${feature}`));
-    if (!isFeatureActive) {
+    if (!ad.offer.features) {
       featureElement.style.display = 'none';
+    } else {
+      ad.offer.features.some ((feature) => featureElement.classList.contains(`popup__feature--${feature}`));
     }
   }
 
   const popupPhotosEl = popup.querySelector('.popup__photos');
   const img = popupPhotosEl.querySelector('img');
   popupPhotosEl.innerHTML = '';
-  ad.offer.photos.forEach ((photo) => {
-    const selClone = img.cloneNode(true);
-    selClone.src = photo;
-    popupPhotosEl.appendChild(selClone);
-  });
+  if (ad.offer.photos) {
+    ad.offer.photos.forEach ((photo) => {
+      const selClone = img.cloneNode(true);
+      selClone.src = photo;
+      popupPhotosEl.appendChild(selClone);
+    });
+  }
   return popup;
 };

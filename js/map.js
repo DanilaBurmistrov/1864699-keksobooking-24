@@ -1,5 +1,8 @@
 import {toggleFormState} from './form.js';
 import {renderPopup} from './popup.js';
+import {getData} from './fetch.js';
+import {getFilteredData, formFilterListener} from './filters.js';
+import {debounce} from './debounce.js';
 
 
 const MAP_CENTER_LAT = 35.68493;
@@ -23,6 +26,10 @@ const addressInput = document.querySelector('#address');
 const map = L.map('map')
   .on('load', () => {
     toggleFormState(false);
+    getData((data) => {
+      getFilteredData(data);
+      formFilterListener(debounce(() => getFilteredData(data)));
+    });
   })
   .setView({
     lat: MAP_CENTER_LAT,
@@ -102,8 +109,9 @@ const getMapPoints = (array) => {
   });
 };
 
+
 const resetAdFormLocation = () => {
-  map
+  map.closePopup()
     .setView({
       lat: MAP_CENTER_LAT,
       lng: MAP_CENTER_LNG,

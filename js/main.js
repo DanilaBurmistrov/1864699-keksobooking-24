@@ -1,6 +1,10 @@
-import {getMapPoints, resetAdFormLocation} from './map.js';
+import {resetAdFormLocation} from './map.js';
 import {getData} from './fetch.js';
 import './form.js';
+import {getFilteredData} from './filters.js';
 
-getData(getMapPoints);
+
+getData((data) => {
+  getFilteredData(data);
+});
 resetAdFormLocation();

@@ -1,11 +1,10 @@
 import {showAlert} from './util.js';
 
-const serverData = 'https://24.javascript.pages.academy/keksobooking/data';
-const serverDataSend = 'https://24.javascript.pages.academy/keksobooking';
-
+const URL_SERVER_DATA = 'https://24.javascript.pages.academy/keksobooking/data';
+const URL_SERVER_DATA_SEND = 'https://24.javascript.pages.academy/keksobooking';
 
 const getData = (onSuccess) => {
-  fetch(serverData)
+  fetch(URL_SERVER_DATA)
     .then((response) => {
       if (response.ok) {
         return response;
@@ -22,7 +21,7 @@ const getData = (onSuccess) => {
 };
 
 const sendData = (onSuccess, onFail, body) => {
-  fetch(serverDataSend,
+  fetch(URL_SERVER_DATA_SEND,
     {
       method: 'POST',
       body,

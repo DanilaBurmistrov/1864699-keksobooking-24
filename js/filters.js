@@ -29,27 +29,27 @@ const keyHousingPrice = {
   },
 };
 
-const isHousingType = (item) =>
+const isTypeValid = (item) =>
   ((item.offer.type === housingType.value) || (housingType.value === 'any'));
 
-const isHousingPrice = (item) =>
+const isPriceValid = (item) =>
   (((item.offer.price >= keyHousingPrice[housingPrice.value].min) &&
   (item.offer.price <= keyHousingPrice[housingPrice.value].max)) ||
   (housingPrice.value === 'any'));
 
-const isHousingRooms = (item) =>
+const isRoomsValid = (item) =>
   ((item.offer.rooms === Number(housingRooms.value)) || (housingRooms.value === 'any'));
 
-const isHousingGuests = (item) =>
+const isGuestsValid = (item) =>
   ((item.offer.guests === Number(housingGuests.value)) || (housingGuests.value === 'any'));
 
-const isHousingFeatures = (item) => {
+const isFeaturesValid = (item) => {
   const featuresCheckedList = housingFeatures.querySelectorAll('input:checked');
   let flag = !featuresCheckedList.length >= 1;
   if (item.offer.features && featuresCheckedList.length >= 1) {
     for (let i = 0; i < featuresCheckedList.length; i++) {
       if (!item.offer.features.includes(featuresCheckedList[i].value)) {
-        return flag = false;
+        return false;
       }
     }
     flag = true;
@@ -58,11 +58,11 @@ const isHousingFeatures = (item) => {
 };
 
 const isCardValid = (item) =>
-  (isHousingType(item) &&
-  isHousingPrice(item) &&
-  isHousingRooms(item) &&
-  isHousingGuests(item) &&
-  isHousingFeatures(item));
+  (isTypeValid(item) &&
+  isPriceValid(item) &&
+  isRoomsValid(item) &&
+  isGuestsValid(item) &&
+  isFeaturesValid(item));
 
 export const getFilteredData = (data) => {
   if (data) {
@@ -74,8 +74,6 @@ export const getFilteredData = (data) => {
 };
 
 export const formFilterListener = (cb) => {
-  formFilters.addEventListener('change', () => {
-    cb();
-  });
+  formFilters.addEventListener('change', cb);
 };
 

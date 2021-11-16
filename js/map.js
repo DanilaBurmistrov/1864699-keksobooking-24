@@ -1,4 +1,4 @@
-import {toggleFormState} from './form.js';
+import {toggleFormState} from './page_status.js';
 import {renderPopup} from './popup.js';
 import {getData} from './fetch.js';
 import {getFilteredData, formFilterListener} from './filters.js';

@@ -8,35 +8,6 @@ import {getPopupSuccess, getPopupError} from './modal.js';
 const TIME_IN = 'timein';
 const TIME_OUT = 'timeout';
 
-const formsAttributes = document.querySelector('.ad-form');
-const mapsAttributes = document.querySelector('.map__filters');
-const fieldsetElements = document.querySelectorAll('fieldset');
-const selectElements = document.querySelectorAll('select');
-
-const toggleFormState = (isDisabled) => {
-  if (isDisabled) {
-    formsAttributes.classList.add('ad-form--disabled');
-    mapsAttributes.classList.add('map__filters--disabled');
-    fieldsetElements.forEach ((fieldsetElement) => {
-      fieldsetElement.setAttribute('disabled', true);
-    });
-    selectElements.forEach ((selectElement) => {
-      selectElement.setAttribute('disabled', true);
-    });
-  } else {
-    formsAttributes.classList.remove('ad-form--disabled');
-    mapsAttributes.classList.remove('map__filters--disabled');
-    fieldsetElements.forEach ((fieldsetElement) => {
-      fieldsetElement.removeAttribute('disabled', false);
-    });
-    selectElements.forEach ((selectElement) => {
-      selectElement.removeAttribute('disabled', false);
-    });
-  }
-};
-
-export {toggleFormState};
-
 const adForm = document.querySelector('.ad-form');
 const inputTitle = adForm.querySelector('#title');
 

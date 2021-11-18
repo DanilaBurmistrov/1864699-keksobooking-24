@@ -49,9 +49,10 @@ const errorButtonClickHandler = () => {
 
 errorButton.addEventListener('click', errorButtonClickHandler);
 
-const removePopupListener = () => {
+function removePopupListener () {
   document.removeEventListener('click', popupClickHandler);
   document.removeEventListener('keydown', popupEscDownHandler);
   errorButton.removeEventListener('click', errorButtonClickHandler);
 }
+
 

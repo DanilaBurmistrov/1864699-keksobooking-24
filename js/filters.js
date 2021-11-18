@@ -75,5 +75,5 @@ export const getFilteredData = (data) => {
 
 export const addFormFilterListener = (cb) => {
   formFilters.addEventListener('change', cb);
+  formFilters.addEventListener('reset', cb);
 };
-

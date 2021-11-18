@@ -40,10 +40,12 @@ export const renderPopup = function(ad) {
   const img = popupPhotosEl.querySelector('img');
   popupPhotosEl.innerHTML = '';
   if (ad.offer.photos) {
+    const fragment = document.createDocumentFragment();
     ad.offer.photos.forEach ((photo) => {
       const selClone = img.cloneNode(true);
       selClone.src = photo;
-      popupPhotosEl.appendChild(selClone);
+      fragment.appendChild(selClone);
+      popupPhotosEl.appendChild(fragment);
     });
   }
   return popup;

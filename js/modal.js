@@ -49,7 +49,7 @@ const errorButtonClickHandler = () => {
 
 errorButton.addEventListener('click', errorButtonClickHandler);
 
-function removePopupListener () {
+const removePopupListener = () => {
   document.removeEventListener('click', popupClickHandler);
   document.removeEventListener('keydown', popupEscDownHandler);
   errorButton.removeEventListener('click', errorButtonClickHandler);

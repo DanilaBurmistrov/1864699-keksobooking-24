@@ -1,7 +1,7 @@
-import {toggleFormState} from './page_status.js';
+import {toggleFormState} from './page-status.js';
 import {renderPopup} from './popup.js';
 import {getData} from './fetch.js';
-import {getFilteredData, formFilterListener} from './filters.js';
+import {getFilteredData, addFormFilterListener} from './filters.js';
 import {debounce} from './debounce.js';
 
 
@@ -28,7 +28,7 @@ const map = L.map('map')
     toggleFormState(false);
     getData((data) => {
       getFilteredData(data);
-      formFilterListener(debounce(() => getFilteredData(data)));
+      addFormFilterListener(debounce(() => getFilteredData(data)));
     });
   })
   .setView({

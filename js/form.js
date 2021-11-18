@@ -1,12 +1,12 @@
-import {MAX_APARTMENTS,
-  MIN_VISITORS} from './constants.js';
 import {sendData} from './fetch.js';
 import {resetAdFormLocation} from './map.js';
 import {getPopupSuccess, getPopupError} from './modal.js';
 
-
+const MAX_APARTMENTS = 100;
+const MIN_VISITORS = 0;
 const TIME_IN = 'timein';
 const TIME_OUT = 'timeout';
+const DEFAULT_COORDINATES = '135.00000, 86.66666';
 
 const adForm = document.querySelector('.ad-form');
 const inputTitle = adForm.querySelector('#title');
@@ -14,7 +14,7 @@ const inputTitle = adForm.querySelector('#title');
 const minTitleLength = inputTitle.minLength;
 const maxTitleLength = inputTitle.maxLength;
 
-export const validateTitle = () => {
+export const titleValidator = () => {
   const valueLength = inputTitle.value.length;
 
   if (valueLength < minTitleLength) {
@@ -27,12 +27,12 @@ export const validateTitle = () => {
   inputTitle.reportValidity();
 };
 
-inputTitle.addEventListener('input', validateTitle);
+inputTitle.addEventListener('input', titleValidator);
 
 const numberOfRoomsAdForm = adForm.querySelector('#room_number');
 const capacityOfRoomsAdForm = adForm.querySelector('#capacity');
 
-export const validateCapacityAndRooms = () => {
+export const capacityAndRoomsValidator = () => {
   const rooms = Number(numberOfRoomsAdForm.value);
   const guests = Number(capacityOfRoomsAdForm.value);
   if (rooms === MAX_APARTMENTS && guests !== MIN_VISITORS) {
@@ -46,17 +46,8 @@ export const validateCapacityAndRooms = () => {
   }
 };
 
-numberOfRoomsAdForm.addEventListener('change', validateCapacityAndRooms);
-capacityOfRoomsAdForm.addEventListener('change', validateCapacityAndRooms);
-
-export const generateValidityError = function (evt) {
-  const field = evt.target;
-  if (!field.validity.valid) {
-    field.style.outline = '2px solid red';
-  } else {
-    field.style = '';
-  }
-};
+numberOfRoomsAdForm.addEventListener('change', capacityAndRoomsValidator);
+capacityOfRoomsAdForm.addEventListener('change', capacityAndRoomsValidator);
 
 const housingTypeAdForm = adForm.querySelector('#type');
 const priceAdForm = adForm.querySelector('#price');
@@ -68,7 +59,7 @@ const minHousingPrice = {
   palace: 10000,
 };
 
-const validatePriceRoom = () => {
+const priceRoomValidator = () => {
   const minPrice = minHousingPrice[housingTypeAdForm.value];
   priceAdForm.placeholder = minPrice;
   if (priceAdForm.value < minPrice) {
@@ -78,27 +69,26 @@ const validatePriceRoom = () => {
   }
 };
 
-priceAdForm.addEventListener('input', validatePriceRoom);
-housingTypeAdForm.addEventListener('change', validatePriceRoom);
+priceAdForm.addEventListener('input', priceRoomValidator);
+housingTypeAdForm.addEventListener('change', priceRoomValidator);
 
 const timeinAdForm = adForm.querySelector('#timein');
 const timeoutAdForm = adForm.querySelector('#timeout');
 
-const validateTime = (evt) => {
+const timeValidator = (evt) => {
   if (evt.target.name === TIME_OUT || evt.target.name === TIME_IN) {
     timeinAdForm.value = evt.target.value;
     timeoutAdForm.value = evt.target.value;
   }
 };
 
-timeinAdForm.addEventListener('change', validateTime);
-timeoutAdForm.addEventListener('change', validateTime);
-
+timeinAdForm.addEventListener('change', timeValidator);
+timeoutAdForm.addEventListener('change', timeValidator);
 
 const adressInput = adForm.querySelector('#address');
 
 const setAddress = () => {
-  adressInput.value = '135.00000, 86.66666';
+  adressInput.value = DEFAULT_COORDINATES;
 };
 
 setAddress();

@@ -73,7 +73,7 @@ export const getFilteredData = (data) => {
   }
 };
 
-export const formFilterListener = (cb) => {
+export const addFormFilterListener = (cb) => {
   formFilters.addEventListener('change', cb);
 };
 
